@@ -60,13 +60,13 @@ Changing a task's manager resets it to `pending` and clears the assigned worker.
 
 ### Prerequisites
 
-- Node.js 20.19+ or 22.12+
+- [Bun](https://bun.sh) (package manager used in this repo, see `bun.lock`) and Node.js 20.19+ or 22.12+ (the server runs on Node)
 - A MongoDB database ([MongoDB Atlas](https://www.mongodb.com/atlas) free tier works)
 
 ### 1. Clone
 
 ```bash
-git clone https://github.com/<your-username>/task-management-system.git
+git clone https://github.com/khabiruzzaman-dev/task-management-system.git
 cd task-management-system
 ```
 
@@ -74,19 +74,19 @@ cd task-management-system
 
 ```bash
 cd backend
-npm install
+bun install
 cp .env.example .env        # then fill in real values (see "Environment variables")
-npm run seed:admin          # creates the first admin from ADMIN_* in .env
-npm start                   # API on http://localhost:3000
+bun run seed:admin          # creates the first admin from ADMIN_* in .env
+bun run start               # API on http://localhost:3000
 ```
 
 ### 3. Frontend
 
 ```bash
 cd frontend
-npm install
+bun install
 cp .env.example .env
-npm run dev                 # app on http://localhost:5173
+bun run dev                 # app on http://localhost:5173
 ```
 
 Log in with the admin account you seeded, then register a manager and a worker from the admin dashboard (new users start as workers; promote one to manager and assign workers to them).
@@ -103,7 +103,7 @@ Log in with the admin account you seeded, then register a manager and a worker f
 | `REFRESH_TOKEN_SECRET_KEY` / `REFRESH_TOKEN_EXPIRY` | Refresh token signing secret (different from the access secret) and lifetime (e.g. `15d`) |
 | `ORG_DOMAIN` | Only emails ending in this domain can log in or be registered |
 | `CLIENT_URL` | Frontend origin allowed by CORS |
-| `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Used only by `npm run seed:admin` |
+| `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Used only by `bun run seed:admin` |
 
 **Frontend (`frontend/.env`)**
 
@@ -165,7 +165,7 @@ frontend/
 
 ## Author
 
-Built by <your name> ([GitHub](https://github.com/<your-username>) · [LinkedIn](TODO)).
+Built by Khabiruzzaman ([GitHub](https://github.com/khabiruzzaman-dev) · [LinkedIn](https://www.linkedin.com/in/khabiruzzaman)).
 
 ## License
 
