@@ -168,5 +168,4 @@ frontend/
 Built by Khabiruzzaman ([GitHub](https://github.com/khabiruzzaman-dev) · [LinkedIn](https://www.linkedin.com/in/khabiruzzaman)).
 
 ## License
-
-TODO: add a LICENSE file (MIT is a common choice for portfolio projects).
+MIT License. See the [LICENSE](LICENSE) file.
