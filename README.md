@@ -179,8 +179,8 @@ frontend/
 
 ## Author
 
-Built by TODO your name ([GitHub](https://github.com/<your-username>) · [LinkedIn](TODO)).
+Built by Khabiruzzaman ([GitHub](https://github.com/khabiruzzaman-dev) · [LinkedIn](https://www.linkedin.com/in/khabiruzzaman)).
 
 ## License
 
-TODO: add a LICENSE file (MIT is a common choice for portfolio projects).
+MIT License. See the [LICENSE](LICENSE) file.
