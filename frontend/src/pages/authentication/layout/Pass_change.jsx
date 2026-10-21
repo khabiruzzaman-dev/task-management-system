@@ -3,25 +3,31 @@ import pass_change_controller from "../controller/pass_change.controller";
 import { useAuth } from "../../../context/Auth.context";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../../context/Notify.context";
+import Loading_screen from "../../../components/pages/Loading_screen.jsx";
+import Buttons from "../../../components/buttons/buttons.jsx";
 
 export default function Pass_change() {
   const [current_password, set_current_password] = useState("");
   const [new_password, set_new_password] = useState("");
   const [new_password_again, set_new_password_again] = useState("");
   const [submitting, set_submitting] = useState(false);
-  const { user } = useAuth();
-  const max_length = 72;
-  const min_length = 8;
+  const {set_user, user, user_loading } = useAuth();
   const navigate = useNavigate();
   const { notify } = useToast();
+  if (user_loading) {
+    return <Loading_screen />;
+  }
+
+  const max_length = 72;
+  const min_length = 8;
 
   function go_back() {
     if (user?.role === "admin") {
-      navigate("/admin");
+      navigate("/admin/dashboard");
     } else if (user?.role === "manager") {
-      navigate("/manager");
+      navigate("/manager/dashboard");
     } else {
-      navigate("/worker");
+      navigate("/worker/dashboard");
     }
   }
 
@@ -48,81 +54,79 @@ export default function Pass_change() {
     if (!result.success) {
       return notify(result.message, "error");
     }
-
+    set_user(null);
+    navigate("/login", { replace: true });
     notify(result.message, "success");
-    go_back();
   }
 
   return (
-    <main className="min-h-screen w-full bg-canvas">
-      <div className="max-w-[560px] mx-auto px-8 pt-8 pb-24">
-        <div className="flex justify-between items-center pb-6">
-          <h1 className="text-title-lg font-bold text-parchment">
-            Change password
-          </h1>
-          <button
-            type="button"
-            className="btn btn-sm btn-ghost"
-            onClick={go_back}
-          >
-            back
-          </button>
-        </div>
 
-        <hr className="hr-hairline" />
+      <div className="container container-narrow">
+      <Buttons variant="ghost" text={"Back to panel"} onClick={go_back} />
 
-        <form
-          onSubmit={password_changer}
-          className="card-vintage flex flex-col gap-5 mt-6"
-        >
-          <div>
-            <label className="label-vintage">old password</label>
-            <input
-              className="input-vintage"
-              type="password"
-              name="current_password"
-              placeholder="••••••••"
-              value={current_password}
-              onChange={function (e) {
-                set_current_password(e.target.value);
-              }}
-              required
-            />
+        <form onSubmit={password_changer} className="card form-card">
+          <div className="form-body">
+            <div>
+              <label className="label label-caps" htmlFor="current_password">
+                old password
+              </label>
+              <input
+                id="current_password"
+                className="input"
+                type="password"
+                name="current_password"
+                placeholder="••••••••"
+                value={current_password}
+                onChange={function (e) {
+                  set_current_password(e.target.value);
+                }}
+                required
+              />
+            </div>
+
+            <div className="form-split">
+              <div>
+                <label className="label label-caps" htmlFor="new_password">
+                  new password
+                </label>
+                <input
+                  id="new_password"
+                  className="input"
+                  type="password"
+                  name="new_password"
+                  placeholder="8 to 72 characters"
+                  value={new_password}
+                  onChange={function (e) {
+                    set_new_password(e.target.value);
+                  }}
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  className="label label-caps"
+                  htmlFor="new_password_again"
+                >
+                  retype new password
+                </label>
+                <input
+                  id="new_password_again"
+                  className="input"
+                  type="password"
+                  name="new_password_again"
+                  placeholder="••••••••"
+                  value={new_password_again}
+                  onChange={function (e) {
+                    set_new_password_again(e.target.value);
+                  }}
+                  required
+                />
+              </div>
+            </div>
           </div>
 
-          <div>
-            <label className="label-vintage">new password</label>
-            <input
-              className="input-vintage"
-              type="password"
-              name="new_password"
-              placeholder="8 to 72 characters"
-              value={new_password}
-              onChange={function (e) {
-                set_new_password(e.target.value);
-              }}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="label-vintage">retype new password</label>
-            <input
-              className="input-vintage"
-              type="password"
-              name="new_password_again"
-              placeholder="••••••••"
-              value={new_password_again}
-              onChange={function (e) {
-                set_new_password_again(e.target.value);
-              }}
-              required
-            />
-          </div>
-
-          <hr className="hr-hairline" />
-
-          <div className="flex justify-end gap-2">
+          <div className="form-actions">
             <button
               type="button"
               className="btn btn-md btn-ghost"
@@ -140,6 +144,6 @@ export default function Pass_change() {
           </div>
         </form>
       </div>
-    </main>
+
   );
 }

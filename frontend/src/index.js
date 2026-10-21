@@ -5,19 +5,23 @@ import { Auth_Provider } from "./context/Auth.context.jsx";
 import Admin_protected_route from "./pages/authentication/layout/Admin_protected.jsx";
 import Register_worker from "./pages/authentication/layout/Register_worker.jsx";
 import Task_creation from "./pages/admin/layout/Task_creation.jsx";
-import Promotion from "./pages/admin/layout/Promotion.jsx";
-import Demotion from "./pages/admin/layout/Demotion.jsx";
 import Assign_worker from "./pages/admin/layout/Assign_worker.jsx";
 import Auth_protected_route from "./pages/authentication/layout/auth_protected.jsx";
 import Pass_change from "./pages/authentication/layout/Pass_change.jsx";
 import Manager from "./pages/manager/layout/Manager.jsx";
 import Manager_protected_route from "./pages/authentication/layout/manager_protected.jsx";
-import Worker_protected_route from "./pages/admin/layout/worker_protected.jsx";
+import Worker_protected_route from "./pages/authentication/layout/worker_protected.jsx";
 import No_user_protected_route from "./pages/authentication/layout/No_user_protected.jsx";
 import Edit_task_as_worker from "./pages/worker/layout/Edit_task_as_worker.jsx";
 import Edit_task_as_manager from "./pages/manager/layout/Edit_as_manager.jsx";
 import Edit_task_as_admin from "./pages/admin/layout/Edit_task_as_admin.jsx";
 import { Toast_Provider } from "./context/Notify.context.jsx";
+import Not_found from "./components/pages/Not_found.jsx";
+import Home from "./pages/home/layout/Home.jsx";
+import Dashboard from "./components/pages/Dashboard.jsx";
+import Tasks from "./components/pages/Tasks.jsx";
+import Employees_admin from "./pages/admin/components/Employees_admin.jsx";
+import Employees_manager from "./pages/manager/components/Employees_manager.jsx";
 
 export {
   Admin,
@@ -27,8 +31,6 @@ export {
   Admin_protected_route,
   Register_worker,
   Task_creation,
-  Promotion,
-  Demotion,
   Assign_worker,
   Auth_protected_route,
   Pass_change,
@@ -40,4 +42,10 @@ export {
   Edit_task_as_manager,
   Edit_task_as_admin,
   Toast_Provider,
+  Not_found,
+  Home,
+  Dashboard,
+  Tasks,
+  Employees_admin,
+  Employees_manager,
 };

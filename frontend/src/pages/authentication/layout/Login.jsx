@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { login_controller } from "../controller/login.controller.js";
 import { useAuth } from "../../../context/Auth.context.jsx";
 import { useToast } from "../../../context/Notify.context.jsx";
+import Loading_screen from "../../../components/pages/Loading_screen.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [worker, set_worker] = useState({});
-  const [display_error, set_display_error] = useState();
-  const [need_to_display, set_need_to_display] = useState(false);
+  const [worker, set_worker] = useState({ email: "", password: "" });
+
   const { set_user, set_access_token_globally, user_loading } = useAuth();
   const { notify } = useToast();
 
@@ -18,11 +18,7 @@ export default function Login() {
     });
   }
   if (user_loading) {
-    return (
-      <>
-        <div className="text-4xl text-green-200">loading</div>
-      </>
-    );
+    return <Loading_screen />;
   }
 
   async function form_handler(e) {
@@ -44,67 +40,101 @@ export default function Login() {
     }
   }
   return (
-    <>
-      <main className="min-h-screen w-full bg-canvas flex items-center justify-center px-8">
-        <div className="w-full max-w-[400px]">
-          <div className="pb-6">
-            <h1 className="text-title-lg font-bold text-parchment">
-              Task manager
-            </h1>
-            <p className="text-caption-md leading-normal text-fade">
-              Log in to continue.
-            </p>
+    <main className="auth">
+      <section className="auth-brand">
+        <div>
+          <span className="brand">
+            <span className="brand-mark">[#]</span>
+            Task manager
+          </span>
+        </div>
+
+        <div className="stack">
+          <p className="eyebrow">How work moves</p>
+          <h2>Every task, one clear path.</h2>
+          <ol className="auth-flow">
+            <li>
+              <span>[+]</span>
+              <span>
+                <strong>Admin</strong> creates a task and picks a manager.
+              </span>
+            </li>
+            <li>
+              <span>[&gt;]</span>
+              <span>
+                <strong>Manager</strong> gives it to a worker on their team.
+              </span>
+            </li>
+            <li>
+              <span>[&gt;]</span>
+              <span>
+                <strong>Worker</strong> does the work and submits it.
+              </span>
+            </li>
+            <li>
+              <span>[x]</span>
+              <span>
+                <strong>Admin</strong> reviews it and approves or rejects.
+              </span>
+            </li>
+          </ol>
+        </div>
+
+        <p className="faint text-xs auth-brand-note">
+          Accounts are created by your admin. There is no public sign up.
+        </p>
+      </section>
+
+      <section className="auth-panel">
+        <div className="auth-card stack">
+          <div>
+            <h1>Log in</h1>
+            <p className="muted">Log in to continue.</p>
           </div>
 
-          <hr className="hr-hairline" />
+          <form onSubmit={form_handler} className="card form-card">
+            <div className="form-body">
+              <div>
+                <label className="label label-caps" htmlFor="email">
+                  email
+                </label>
+                <input
+                  id="email"
+                  className="input"
+                  type="email"
+                  name="email"
+                  placeholder="*****@kr.org"
+                  value={worker.email}
+                  onChange={input_handler}
+                  required
+                />
+              </div>
 
-          <form
-            onSubmit={form_handler}
-            className="card-vintage flex flex-col gap-5 mt-6"
-          >
-            <div>
-              <label className="label-vintage">email</label>
-              <input
-                className="input-vintage"
-                type="email"
-                name="email"
-                placeholder="*****@kr.org"
-                value={worker.email}
-                onChange={input_handler}
-                required
-              />
+              <div>
+                <label className="label label-caps" htmlFor="password">
+                  password
+                </label>
+                <input
+                  id="password"
+                  className="input"
+                  type="password"
+                  name="password"
+                  placeholder="••••••••"
+                  value={worker.password}
+                  onChange={input_handler}
+                  required
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="label-vintage">password</label>
-              <input
-                className="input-vintage"
-                type="password"
-                name="password"
-                placeholder="••••••••"
-                value={worker.password}
-                onChange={input_handler}
-                required
-              />
-            </div>
-            {need_to_display && (
-              <>
-                <span className="border border-red-600/40 text-center py-0.5 px-1.5 text-lg text-red-500 ">
-                  {display_error}{" "}
-                </span>
-              </>
-            )}
-
-            <hr className="hr-hairline" />
-
-            <div className="flex justify-end">
+            <div className="form-actions">
               <button type="submit" className="btn btn-md btn-primary">
-                Login
+                Log in
               </button>
             </div>
           </form>
         </div>
-      </main>
-    </>
+      </section>
+    </main>
   );
 }

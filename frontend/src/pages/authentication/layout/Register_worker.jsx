@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../context/Auth.context.jsx";
 import { register_worker_controller } from "../controller/register.controller.js";
 import { useEmployee } from "../../../context/Employee.context.jsx";
 import { useToast } from "../../../context/Notify.context.jsx";
+import Buttons from "../../../components/buttons/buttons.jsx";
 
 export default function Register_worker() {
   const navigate = useNavigate();
   const { notify } = useToast();
-  const [form, set_form] = useState({});
+  const [form, set_form] = useState({ name: "", email: "", password: "" });
   const { refresh_employee } = useEmployee();
 
   function input_handler(e) {
@@ -25,37 +25,19 @@ export default function Register_worker() {
     }
     refresh_employee();
     notify(result.message, "success");
-    navigate("/admin");
+    navigate("/admin/employees");
   }
   return (
-    <>
-      <main className="min-h-screen w-full bg-canvas">
-        <div className="max-w-[560px] mx-auto px-8 pt-8 pb-24">
-          <div className="flex justify-between items-center pb-6">
-            <h1 className="text-title-lg font-bold text-parchment">
-              Register worker
-            </h1>
-            <button
-              type="button"
-              className="btn btn-sm btn-ghost"
-              onClick={function () {
-                navigate("/admin");
-              }}
-            >
-              back
-            </button>
-          </div>
 
-          <hr className="hr-hairline" />
-
-          <form
-            onSubmit={form_handler}
-            className="card-vintage flex flex-col gap-5 mt-6"
-          >
+      <div className="w-full flex flex-col">
+        <Buttons variant="ghost" size="sm" text={"Back to panel"} onClick={function(){navigate("/admin/employees",{replace:true})}} />
+        <form onSubmit={form_handler} className="card form-card">
+          <div className="form-body">
             <div>
-              <label className="label-vintage">worker's name</label>
+              <label className="label label-caps" htmlFor="name">worker's name</label>
               <input
-                className="input-vintage"
+                id="name"
+                className="input"
                 type="text"
                 name="name"
                 placeholder="Worker's name"
@@ -66,9 +48,10 @@ export default function Register_worker() {
             </div>
 
             <div>
-              <label className="label-vintage">worker's email</label>
+              <label className="label label-caps" htmlFor="email">worker's email</label>
               <input
-                className="input-vintage"
+                id="email"
+                className="input"
                 type="email"
                 name="email"
                 placeholder="*****@kr.org"
@@ -76,12 +59,14 @@ export default function Register_worker() {
                 onChange={input_handler}
                 required
               />
+              <p className="hint">Only emails on your organisation's domain can log in.</p>
             </div>
 
             <div>
-              <label className="label-vintage">password</label>
+              <label className="label label-caps" htmlFor="password">password</label>
               <input
-                className="input-vintage"
+                id="password"
+                className="input"
                 type="password"
                 name="password"
                 placeholder="••••••••"
@@ -90,26 +75,24 @@ export default function Register_worker() {
                 required
               />
             </div>
+          </div>
 
-            <hr className="hr-hairline" />
+          <div className="form-actions">
+            <button
+              type="button"
+              className="btn btn-md btn-ghost"
+              onClick={function () {
+                navigate("/admin/employees");
+              }}
+            >
+              Cancel
+            </button>
+            <button type="submit" className="btn btn-md btn-primary">
+              Register worker
+            </button>
+          </div>
+        </form>
+      </div>
 
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                className="btn btn-md btn-ghost"
-                onClick={function () {
-                  navigate("/admin");
-                }}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="btn btn-md btn-primary">
-                Register worker
-              </button>
-            </div>
-          </form>
-        </div>
-      </main>
-    </>
   );
 }

@@ -15,7 +15,7 @@ export default async function assign_worker_service(
   if (!the_manager || !the_worker) {
     throw new App_error(
       "worker or manager is not found",
-      403,
+      404,
       "USER_NOT_FOUND",
     );
   }
@@ -25,6 +25,9 @@ export default async function assign_worker_service(
       403,
       "VALIDATION_ERROR",
     );
+  }
+  if (the_worker.manager) {
+    throw new App_error(`${the_worker.name} is already assigned to a manager`,409,"CONFLICT")
   }
 
   return await User.findOneAndUpdate(
