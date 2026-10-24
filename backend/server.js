@@ -6,7 +6,7 @@ async function server() {
   try {
     await connecting_to_db();
     app.listen(variables.PORT, function () {
-      console.log("hi, server is good to go");
+      console.log(`hi, server is good to go,${variables.PORT}`);
     });
   } catch (error) {
     console.log(`server failed to connect with db ,error : ${error}`);
